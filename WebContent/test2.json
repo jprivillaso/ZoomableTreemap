@@ -1,0 +1,87 @@
+{
+ "name": "Continents",
+ "children": [
+  {
+   "name": "America",
+   "children": [
+    {
+        "name": "Colombia",
+        "value": 1000,
+        "children":[
+            {
+                "name": "Antioquia",
+                "value" : 1500,
+                "children":[
+                    {
+                    	"name": "Rionegro",
+                		"value": 1200
+                	},
+                	{
+                		"name": "Medellin",
+                		"value": 2500
+                	}
+                ]
+            },
+            {
+                "name": "Cundinamarca",
+                "value" : 3569
+            }         
+        ]
+    },
+    {
+        "name": "Brasil", 
+        "value": 3000
+    },
+    {
+        "name": "Ecuador", 
+        "value": 3000
+    }
+   ]
+  },
+  {
+   "name": "Europe",
+   "children": [
+    {
+        "name": "France", 
+        "value": 1082,
+        "children": [
+            {
+                "name": "Paris",
+                "value" : 800
+            }    
+        ]
+    },
+    {
+        "name": "Germany",
+        "value": 1336,
+        "children": [
+            {
+                "name": "Munchen",
+                "value" : 800
+            }    
+        ]
+    },
+    {
+        "name": "Hungary", 
+        "value": 319
+    }    
+   ]
+  },
+  {
+   "name": "Asia",
+   "children": [
+    {
+        "name": "India",
+        "value": 2105,
+        "children": [
+            {
+                "name": "New Dheli",
+                "value" : 800
+            }    
+        ]},
+    {"name": "China", "value": 1316},
+    {"name": "Japan", "value": 3151}
+   ]
+  }
+ ]
+}

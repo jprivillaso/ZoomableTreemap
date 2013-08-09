@@ -1,0 +1,53 @@
+@CHARSET "ISO-8859-1";
+@import url(style.css?20120608);
+
+#chart {
+	background: #bbb;
+}
+
+text {
+	pointer-events: none;
+}
+
+rect.parent {
+	margin-bottom: 30px;
+}
+
+.grandparent text {
+	font-weight: bold;
+}
+
+rect {
+	fill: none;
+	stroke: #fff;
+}
+
+rect.parent,.grandparent rect {
+	stroke-width: 2px;
+}
+
+.grandparent rect {
+	fill: #8fc800;;
+}
+
+.grandparent:hover rect {
+	/*fill: #ee9700;*/
+	/*fill-opacity: 0.5;*/
+}
+
+.children rect.parent,.grandparent rect {
+	cursor: pointer;
+}
+
+rect.parent {
+	pointer-events: all;
+}
+
+rect.child{
+	fill: #b4df5b;
+}
+
+.children:hover rect.child {
+	fill: #cdeb8e;
+	fill-opacity: 0.7;
+}

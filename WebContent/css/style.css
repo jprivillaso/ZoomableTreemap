@@ -1,0 +1,30 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Serif|PT+Serif:b|PT+Serif:i|PT+Sans|PT+Sans:b);
+
+body {
+  background: #fcfcfa;
+  color: #333;
+  font-family: "PT Serif", serif;
+  margin: 1em auto 4em auto;
+  position: relative;
+  width: 700px;
+  text-align: center;
+}
+
+h1,
+aside {
+  color: #000;
+  font-family: "PT Sans", sans-serif;
+}
+
+h1 {
+  font-size: 64px;
+  font-weight: 300;
+  letter-spacing: -2px;
+  margin: 0px auto;
+  margin: .3em 0 .1em 0;
+  text-rendering: optimizeLegibility;
+}
+
+.svg {
+  font: 15px PT Serif", serif;
+}
