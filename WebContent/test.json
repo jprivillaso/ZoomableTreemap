@@ -1,68 +1,86 @@
 {
- "name": "flare",
+ "name": "Continents",
  "children": [
   {
-   "name": "data",
+   "name": "America",
    "children": [
     {
-     "name": "converters",
-     "children": [
-      {"name": "Converters", "value": 721},
-      {"name": "DelimitedTextConverter", "value": 4294},
-      {"name": "GraphMLConverter", "value": 9800},
-      {"name": "IDataConverter", "value": 1314},
-      {"name": "JSONConverter", "value": 2220}
-     ]
+        "name": "Colombia",
+        "value": 1000,
+        "children":[
+            {
+                "name": "Antioquia",
+                "value" : 1500,
+                "children":[
+                    {
+                    	"name": "Rionegro",
+                		"value": 1200
+                	},
+                	{
+                		"name": "Medellin",
+                		"value": 2500
+                	}
+                ]
+            },
+            {
+                "name": "Cundinamarca",
+                "value" : 3569
+            }         
+        ]
     },
-    {"name": "DataField", "value": 1759},
-    {"name": "DataSchema", "value": 2165},
-    {"name": "DataSet", "value": 586},
-    {"name": "DataSource", "value": 3331},
-    {"name": "DataTable", "value": 772},
-    {"name": "DataUtil", "value": 3322}
+    {
+        "name": "Brasil", 
+        "value": 3000
+    },
+    {
+        "name": "Ecuador", 
+        "value": 3000
+    }
    ]
   },
   {
-   "name": "display",
+   "name": "Europe",
    "children": [
-    {"name": "DirtySprite", "value": 8833},
-    {"name": "LineSprite", "value": 1732},
-    {"name": "RectSprite", "value": 3623},
-    {"name": "TextSprite", "value": 10066}
+    {
+        "name": "France", 
+        "value": 1082,
+        "children": [
+            {
+                "name": "Paris",
+                "value" : 800
+            }    
+        ]
+    },
+    {
+        "name": "Germany",
+        "value": 1336,
+        "children": [
+            {
+                "name": "Munchen",
+                "value" : 800
+            }    
+        ]
+    },
+    {
+        "name": "Hungary", 
+        "value": 319
+    }    
    ]
   },
   {
-   "name": "flex",
+   "name": "Asia",
    "children": [
-    {"name": "FlareVis", "value": 4116}
-   ]
-  },
-  {
-   "name": "physics",
-   "children": [
-    {"name": "DragForce", "value": 1082},
-    {"name": "GravityForce", "value": 1336},
-    {"name": "IForce", "value": 319},
-    {"name": "NBodyForce", "value": 10498},
-    {"name": "Particle", "value": 2822},
-    {"name": "Simulation", "value": 9983},
-    {"name": "Spring", "value": 2213},
-    {"name": "SpringForce", "value": 1681}
-   ]
-  },
-  {
-   "name": "scale",
-   "children": [
-    {"name": "IScaleMap", "value": 2105},
-    {"name": "LinearScale", "value": 1316},
-    {"name": "LogScale", "value": 3151},
-    {"name": "OrdinalScale", "value": 3770},
-    {"name": "QuantileScale", "value": 2435},
-    {"name": "QuantitativeScale", "value": 4839},
-    {"name": "RootScale", "value": 1756},
-    {"name": "Scale", "value": 4268},
-    {"name": "ScaleType", "value": 1821},
-    {"name": "TimeScale", "value": 5833}
+    {
+        "name": "India",
+        "value": 2105,
+        "children": [
+            {
+                "name": "New Dheli",
+                "value" : 800
+            }    
+        ]},
+    {"name": "China", "value": 1316},
+    {"name": "Japan", "value": 3151}
    ]
   }
  ]
