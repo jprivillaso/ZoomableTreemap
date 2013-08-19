@@ -5,10 +5,15 @@
 		right : 0,
 		bottom : 20,
 		left : 0
-	}, width = 700, height = 400, transitioning;
+	}, width = 700, height = 500, transitioning;
+	
+	//Calculates the color of the node.
+	color = d3.scale.linear()
+    	.domain([0, 1000])
+    	.range(["#009A9A", "#1B1BB3"]);
 	
 	//Duration of the zoom transition
-	var transitionDuration = 500;
+	var transitionDuration = 400;
 
 	//This method sets the properties of the text
 	var text = function(text) {
@@ -21,7 +26,7 @@
 			return y(d.y) + 25;
 		});
 	};
-
+		
 	// This method sets the properties of the rectangle(node)
 	var rect = function(rect) {
 		//Position in x
@@ -41,12 +46,11 @@
 			return y(d.y + d.dy) - y(d.y);
 		});
 	};
-
-
+	
 	// This method returns the name of the actual node
-	function name(d) {
+	var name = function(d) {
 		return d.parent ? name(d.parent) + "." + d.name : d.name;
-	}
+	};
 
 	var x = d3.scale.linear().domain([ 0, width ]).range([ 0, width ]);
 	var y = d3.scale.linear().domain([ 0, height ]).range([ 0, height ]);
@@ -64,6 +68,7 @@
 
 	//Create the SVG with its properties. Create the hierarchical elements
 	var svg = d3.select("#chart")
+		.attr("class", "blues")
 		.append("svg")
 		.attr("width", width)
 		.attr("height",	height)
@@ -84,11 +89,12 @@
 
 	grandparent.append("text")
 		.attr("x", 6)
-		.attr("y", 6 - margin.top)
-		.attr("dy",".75em");
+		.attr("y", 10 - margin.top)
+		.attr("dy",".90em");
 
 	//D3 JSON reader, it returns an array of objects. In this case is called root
 	d3.json("test2.json", function(root) {	
+			    
 		//Initial values for the chart
 		var initialize = function(root) {
 			root.x = root.y = 0;
@@ -192,20 +198,33 @@
 				}).enter()
 				.append("rect")
 				.attr("class", "child")
-				.call(rect);
+				.call(rect)
+				.attr("fill", "red");
 		
 			g.append("rect")
 				.attr("class", "parent")
-				.call(rect);
-			
+				.call(rect)
+				.on("click", function(d){
+					console.log(d.value);
+				});
+						
 			//Create the text of each node, setting the height and the name that
 			// will be displayed on it
 			g.append("text")
 			.attr("dy", ".75em")
 			.text(function(d) {
-				return d.name + " - Value:" + d.value;
+				return "name: " + d.name + " - value:" + d.value;
 			}).call(text);
 			
+			d3.selectAll("rect.parent").style("fill", function(d){
+				var blue = parseInt((d.value / 39000) * 255, 10);
+				return "rgb(0,"+ blue +",255)";
+			});
+			
+			d3.selectAll("rect.child").style("fill", function(d){
+				var blue = parseInt((d.value / 39000) * 255, 10);
+				return "rgb(0,"+ blue +",255)";
+			});
 			return g;
 		};
 		
@@ -213,5 +232,6 @@
 		accumulate(root);
 		layout(root);
 		display(root);
+		
 	});
 })();
