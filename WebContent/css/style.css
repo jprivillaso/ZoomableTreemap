@@ -27,4 +27,6 @@ h1 {
 
 .svg {
   font: 15px PT Serif", serif;
+  position: relative;
+  overflow: hidden;
 }
