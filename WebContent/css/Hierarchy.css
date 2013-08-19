@@ -27,7 +27,7 @@ rect.parent,.grandparent rect {
 }
 
 .grandparent rect {
-	fill: #8fc800;;
+	fill: #0AA4F6;
 }
 
 .grandparent:hover rect {

@@ -7,11 +7,6 @@
 		left : 0
 	}, width = 700, height = 500, transitioning;
 	
-	//Calculates the color of the node.
-	color = d3.scale.linear()
-    	.domain([0, 1000])
-    	.range(["#009A9A", "#1B1BB3"]);
-	
 	//Duration of the zoom transition
 	var transitionDuration = 400;
 
@@ -51,7 +46,12 @@
 	var name = function(d) {
 		return d.parent ? name(d.parent) + "." + d.name : d.name;
 	};
-
+	
+	function randomNumber(min, max, d) {
+        //return parseInt(Math.random() * (max - min) + min);
+        return parseInt((d.value/35600) * 8 , 10);
+    }
+	
 	var x = d3.scale.linear().domain([ 0, width ]).range([ 0, width ]);
 	var y = d3.scale.linear().domain([ 0, height ]).range([ 0, height ]);
 
@@ -68,7 +68,7 @@
 
 	//Create the SVG with its properties. Create the hierarchical elements
 	var svg = d3.select("#chart")
-		.attr("class", "blues")
+		.attr("class", "Blues")
 		.append("svg")
 		.attr("width", width)
 		.attr("height",	height)
@@ -93,12 +93,8 @@
 		.attr("dy",".90em");
 
 	//D3 JSON reader, it returns an array of objects. In this case is called root
-<<<<<<< HEAD
 	d3.json("test2.json", function(root) {	
 			    
-=======
-	d3.json("test.json", function(root) {	
->>>>>>> 06dd1c975684e5558bac47a78f07cc676e0cdf9f
 		//Initial values for the chart
 		var initialize = function(root) {
 			root.x = root.y = 0;
@@ -201,12 +197,16 @@
 					return d.children || [ d ];
 				}).enter()
 				.append("rect")
-				.attr("class", "child")
+				.attr("class", function(d){
+					return "q" + randomNumber(0,8,d) + "-9 child";
+				})
 				.call(rect)
 				.attr("fill", "red");
 		
 			g.append("rect")
-				.attr("class", "parent")
+				.attr("class", function(d){
+					return "q" + randomNumber(0,8,d) + "-9 cell parent";
+				})
 				.call(rect)
 				.on("click", function(d){
 					console.log(d.value);
@@ -221,13 +221,14 @@
 			}).call(text);
 			
 			d3.selectAll("rect.parent").style("fill", function(d){
-				var blue = parseInt((d.value / 39000) * 255, 10);
-				return "rgb(0,"+ blue +",255)";
+				/*var green = parseInt((d.value / 39000) * 255, 10);
+				return "rgb(0,"+ green +",255)";*/
+				
 			});
 			
 			d3.selectAll("rect.child").style("fill", function(d){
-				var blue = parseInt((d.value / 39000) * 255, 10);
-				return "rgb(0,"+ blue +",255)";
+				/*var green = parseInt((d.value / 39000) * 255, 10);
+				return "rgb(0,"+ green +",255)";*/
 			});
 			return g;
 		};

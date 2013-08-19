@@ -1,0 +1,34 @@
+{
+    "name" : "",
+    "value" : 1000,
+    "children" : [
+        {
+            "name" : "Barcelona", 
+            "value" : 1000,
+            "children": [
+                {"name":"Ron","value":850},
+                {"name":"Mar","value":650},
+                {"name":"Ter","value":420},
+                {"name":"Terita","value":698}
+            ] 
+        },         
+        {
+            "name" : "Real Madrid",
+            "value" : 1000,
+            "children": [
+                {"name":"Ronaldo","value":700},
+                {"name":"Marcelo","value":700}
+            ]
+        },
+        {
+            "name" : "Bayern Munich",
+            "value" : 1000,
+            "children": []
+        },
+        {
+            "name" : "Inter",
+            "value" : 1000,
+            "children": []
+        }
+    ]
+}

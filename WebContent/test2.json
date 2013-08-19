@@ -30,11 +30,11 @@
     },
     {
         "name": "Brasil", 
-        "value": 8000
+        "value": 12000
     },
     {
         "name": "Ecuador", 
-        "value": 2600
+        "value": 8000
     }
    ]
   },
@@ -43,21 +43,21 @@
    "children": [
     {
         "name": "France", 
-        "value": 100,
+        "value": 5000,
         "children": [
             {
                 "name": "Paris",
-                "value" : 800
+                "value" : 2500
             }    
         ]
     },
     {
         "name": "Germany",
-        "value": 500,
+        "value": 1200,
         "children": [
             {
                 "name": "Munchen",
-                "value" : 2600
+                "value" : 3400
             }    
         ]
     },
@@ -80,7 +80,7 @@
             }    
         ]},
     {"name": "China", "value": 30000},
-    {"name": "Japan", "value": 3000}
+    {"name": "Japan", "value": 6000}
    ]
   }
  ]
