@@ -93,8 +93,12 @@
 		.attr("dy",".90em");
 
 	//D3 JSON reader, it returns an array of objects. In this case is called root
+<<<<<<< HEAD
 	d3.json("test2.json", function(root) {	
 			    
+=======
+	d3.json("test.json", function(root) {	
+>>>>>>> 06dd1c975684e5558bac47a78f07cc676e0cdf9f
 		//Initial values for the chart
 		var initialize = function(root) {
 			root.x = root.y = 0;
