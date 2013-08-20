@@ -3,30 +3,30 @@
 	// CONSTANTS
 	var TOOLTIP_NUMBER_FORMAT = ",d";	
 	var CHART_ELEMENTS_MARGIN = {
-		top: 45,
-		right: 0,
-		bottom: 0,
-		left: 0
+	top: 45,
+	right: 0,
+	bottom: 0,
+	left: 0
 	};	
 	var TEXT_MARGIN = {
-		top: 10,
-		right: 0,
-		bottom: 0,
-		left : 6
+	top: 10,
+	right: 0,
+	bottom: 0,
+	left : 6
 	};	
-    var CHART_ANCHOR = 700;
-    var CHART_HEIGHT = 500 - CHART_ELEMENTS_MARGIN.top;
-    var ZOOM_TRANSITION_DURATION = 400;
-    
-    // VARIABLES
-    
-    var formatTooltipNumber = d3.format(TOOLTIP_NUMBER_FORMAT);
-    var transitioning = false;
+	var CHART_ANCHOR = 700;
+	var CHART_HEIGHT = 500 - CHART_ELEMENTS_MARGIN.top;
+	var ZOOM_TRANSITION_DURATION = 400;
 	
-    /**
-     * Return the max value of an array
-     */
-	var getArrayMaxValue = function(array){
+	// VARIABLES
+	
+	var formatTooltipNumber = d3.format(TOOLTIP_NUMBER_FORMAT);
+	var transitioning = false;
+	
+	/**
+	* Return the max value of an array
+        */
+    	var getArrayMaxValue = function(array){
 		var position = array.length-1;
 		
 		for (var i=array.length-1; i--;) {
