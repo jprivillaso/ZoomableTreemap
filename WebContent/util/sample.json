@@ -16,7 +16,7 @@
                 "color" : 1500,
                 "children":[
                     {
-                    	"name": "Rionegro",
+                        "name": "Rionegro",
                 		"value": 1200,
                 		"color" : 300
                 	},
@@ -98,6 +98,53 @@
         ]},
     {"name": "China", "value": 20000,"color" : 5000}
    ]
+  },
+  {
+    "name": "Oceania",
+    "value" : 4600,
+    "color": 4600,
+    "children":[
+        {
+            "name" : "country1" ,
+            "value": 1230,
+            "color": 12596       
+        },
+        {
+            "name" : "country2" ,
+            "value": 2800,
+            "color": 7851       
+        }
+    ]
+  },{
+    "name": "Africa",
+    "color": 9000,
+    "value" : 9000,
+    "children": [
+        {
+            "name": "Nigeria",
+            "value" : 7025,
+            "color" : 1259,
+            "children":[
+                {
+                    "name" : "xThing",
+                    "color" : 15175,
+                    "value" : 15175    
+                }
+            ]
+        },
+        {
+            "name": "Camerun",
+            "value" : 1000,
+            "color" : 1698,
+            "children":[
+                {
+                    "name" : "yThing",
+                    "color" : 700,
+                    "value" : 8478    
+                }
+            ]
+        }
+    ]
   }
  ]
 }
