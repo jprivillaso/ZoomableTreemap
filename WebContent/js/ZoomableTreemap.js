@@ -23,20 +23,6 @@
     var formatTooltipNumber = d3.format(TOOLTIP_NUMBER_FORMAT);
     var transitioning = false;
 	
-    /**
-     * Return the max value of an array
-     */
-	var getArrayMaxValue = function(array){
-		var position = array.length-1;
-		
-		for (var i=array.length-1; i--;) {
-		   if (array[i] > array[position]) {
-			   position = i;
-		   }
-		}
-		return array[position];
-	};
-	
 	/*
 	 * Return the maximum value of the nodes that are displayed at the moment
 	 * in the chart
@@ -48,7 +34,7 @@
 		for (var i = 0; i < elements.length; i++){
 			array.push(elements[i].__data__.color);
 		}				
-		return getArrayMaxValue(array);
+		return _.max(array);
 	};	
 	
 	//This method sets the properties of each text element
