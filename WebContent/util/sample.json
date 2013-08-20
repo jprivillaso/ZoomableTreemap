@@ -1,0 +1,103 @@
+{
+ "name": "Continents",
+ "children": [
+  {
+   "name": "America",
+   "color" : 6500,
+   "children": [
+    {
+        "name": "Colombia",
+        "value": 2000,
+        "color" : 2000,
+        "children":[
+            {
+                "name": "Antioquia",
+                "value" : 1500,
+                "color" : 1500,
+                "children":[
+                    {
+                    	"name": "Rionegro",
+                		"value": 1200,
+                		"color" : 300
+                	},
+                	{
+                		"name": "Medellin",
+                		"value": 2500,
+                		"color" : 800
+                	}
+                ]
+            },
+            {
+                "name": "Cundinamarca",
+                "value" : 3569,
+                "color" : 900
+            }         
+        ]
+    },
+    {
+        "name": "Brasil", 
+        "value": 3000,
+        "color" : 1900
+    },
+    {
+        "name": "Ecuador", 
+        "value": 1500,
+        "color" : 1520
+    }
+   ]
+  },
+  {
+   "name": "Europe",
+   "color" : 3000,
+   "children": [
+    {
+        "name": "France", 
+        "value": 5000,
+        "color" : 800,
+        "children": [
+            {
+                "name": "Paris",
+                "value" : 2500,
+                "color" : 1520
+            }    
+        ]
+    },
+    {
+        "name": "Germany",
+        "value": 1200,
+        "color" : 1500,
+        "children": [
+            {
+                "name": "Munchen",
+                "value" : 3400,
+                "color" : 1520
+            }    
+        ]
+    },
+    {
+        "name": "Hungary", 
+        "value": 10000,
+        "color" : 700
+    }    
+   ]
+  },
+  {
+   "name": "Asia",
+   "color" : 11000,
+   "children": [
+    {
+        "name": "India",
+        "value": 15000,
+        "color" : 6000,
+        "children": [
+            {
+                "name": "New Dheli",
+                "value" : 15000,
+                "color" : 1520
+            }    
+        ]},
+    {"name": "China", "value": 20000,"color" : 5000}
+   ]
+  }
+ ]
+}
