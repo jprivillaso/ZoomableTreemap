@@ -3,6 +3,7 @@
 	// CONSTANTS
 	var TOOLTIP_NUMBER_FORMAT = ",d";	
 	var CHART_ELEMENTS_MARGIN = {
+<<<<<<< HEAD
 		top: 45,
 		right: 0,
 		bottom: 0,
@@ -12,12 +13,20 @@
 	 * You can change any time to reorder as you want the position of the text
 	 * in each node
 	 */
-	var TEXT_MARGIN = {
-		top: 10,
-		right: 0,
-		bottom: 0,
-		left : 6
+=======
+	top: 45,
+	right: 0,
+	bottom: 0,
+	left: 0
 	};	
+>>>>>>> 4f55186cef4c464ecefb81a9a70603b901dd5c76
+	var TEXT_MARGIN = {
+	top: 10,
+	right: 0,
+	bottom: 0,
+	left : 6
+	};	
+<<<<<<< HEAD
     var CHART_ANCHOR = 980;
     var CHART_HEIGHT = 500 - CHART_ELEMENTS_MARGIN.top;
     var ZOOM_TRANSITION_DURATION = 350;
@@ -28,6 +37,31 @@
     var formatTooltipNumber = d3.format(TOOLTIP_NUMBER_FORMAT);
     var transitioning = false;
 	
+=======
+	var CHART_ANCHOR = 700;
+	var CHART_HEIGHT = 500 - CHART_ELEMENTS_MARGIN.top;
+	var ZOOM_TRANSITION_DURATION = 400;
+	
+	// VARIABLES
+	
+	var formatTooltipNumber = d3.format(TOOLTIP_NUMBER_FORMAT);
+	var transitioning = false;
+	
+	/**
+	* Return the max value of an array
+        */
+    	var getArrayMaxValue = function(array){
+		var position = array.length-1;
+		
+		for (var i=array.length-1; i--;) {
+		   if (array[i] > array[position]) {
+			   position = i;
+		   }
+		}
+		return array[position];
+	};
+	
+>>>>>>> 4f55186cef4c464ecefb81a9a70603b901dd5c76
 	/*
 	 * Return the maximum value of the nodes that are displayed at the moment
 	 * in the chart
