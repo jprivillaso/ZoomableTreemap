@@ -7,7 +7,11 @@
 		right: 0,
 		bottom: 0,
 		left: 0
-	};	
+	};
+	/*
+	 * You can change any time to reorder as you want the position of the text
+	 * in each node
+	 */
 	var TEXT_MARGIN = {
 		top: 10,
 		right: 0,
@@ -18,8 +22,9 @@
     var CHART_HEIGHT = 500 - CHART_ELEMENTS_MARGIN.top;
     var ZOOM_TRANSITION_DURATION = 350;
     
-    // VARIABLES
-    
+    // VARIABLES    
+    var maxShownValue = 0;
+    var colorCalculationFlag = 0;
     var formatTooltipNumber = d3.format(TOOLTIP_NUMBER_FORMAT);
     var transitioning = false;
 	
@@ -33,40 +38,57 @@
 		
 		for (var i = 0; i < elements.length; i++){
 			array.push(elements[i].__data__.color);
-		}				
+		}		
+	    maxShownValue = _.max(array);
 		return _.max(array);
 	};	
+	
+	/*
+	 * This is the formula to calculate the proper color of the chart node. 
+	 * It is calculated based on the color property that is stored in the
+	 * JSON file, divided into the maximum value of the visible nodes and
+	 * then multiplied by 8 that is the mayor number in the COLORBREWER.JS
+	 * You can check the COLORBREWER.CSS file in order to get it. The number
+	 * 10 is because we need it the number in 10th base.
+	 */
+	var colorNumberGenerator = function(node) {
+		if (colorCalculationFlag > 1) {
+			return parseInt((node.color/maxShownValue) * 8 , 10);
+    	}else{
+    		return parseInt((node.color/getMaxShownValue()) * 8 , 10);
+    	}
+    };
 	
 	//This method sets the properties of each text element
 	var text = function(text) {
 		//Position in x
-		text.attr("x", function(d) {
-			return x(d.x) + TEXT_MARGIN.left; 
+		text.attr("x", function(node) {
+			return x(node.x) + TEXT_MARGIN.left; 
 		})
 		//Position in y
-		.attr("y", function(d) {
-			return y(d.y) + TEXT_MARGIN.top; 
+		.attr("y", function(node) {
+			return y(node.y) + TEXT_MARGIN.top; 
 		});
 	};
 	
 	// This method sets the properties of each rectangle(node) element
 	var rect = function(rect) {
-		rect.attr("x", function(d) {
-			return x(d.x); 
-		}).attr("y", function(d) {
-			return y(d.y); 
-		}).attr("width", function(d) {
-			return x(d.x + d.dx) - x(d.x);
-		}).attr("height", function(d) {
-			return y(d.y + d.dy) - y(d.y); 
+		rect.attr("x", function(node) {
+			return x(node.x); 
+		}).attr("y", function(node) {
+			return y(node.y); 
+		}).attr("width", function(node) {
+			return x(node.x + node.dx) - x(node.x);
+		}).attr("height", function(node) {
+			return y(node.y + node.dy) - y(node.y); 
 		});
 	};
 	
 	// This method returns the name of the actual node
-	var name = function(d) {
-		return d.parent 
-			? name(d.parent) + " - " + d.name
-			: d.name;
+	var name = function(node) {
+		return node.parent 
+			? name(node.parent) + " - " + node.name
+			: node.name;
 	};
 	
 	var x = d3.scale.linear().domain([0, CHART_ANCHOR]).range([0, CHART_ANCHOR]);
@@ -86,196 +108,220 @@
 	 */ 
 	var svg = d3.select("#chart").append("svg")
 		.attr("class", "Blues")
-	    .attr("width", CHART_ANCHOR + CHART_ELEMENTS_MARGIN.left + CHART_ELEMENTS_MARGIN.right)
-	    .attr("height", CHART_HEIGHT + CHART_ELEMENTS_MARGIN.bottom + CHART_ELEMENTS_MARGIN.top)
+		.attr("width", CHART_ANCHOR + "px")
+		.attr("height", CHART_HEIGHT + CHART_ELEMENTS_MARGIN.top + "px")
 	    .style("margin-left", -CHART_ELEMENTS_MARGIN.left + "px")
 	    .style("margin.right", -CHART_ELEMENTS_MARGIN.right + "px")
-	  .append("g")
+	    .append("g")
 	    .attr("transform", "translate(" + CHART_ELEMENTS_MARGIN.left + "," + CHART_ELEMENTS_MARGIN.top + ")")
 	    .style("shape-rendering", "crispEdges");
 	
-	// This is the text that will show the hierarchy filled with orange color
-	var grandparent = svg.append("g")
-	    .attr("class", "grandparent");
-	
-	grandparent.append("rect")
-	    .attr("y", -CHART_ELEMENTS_MARGIN.top)
-	    .attr("width", CHART_ANCHOR)
-	    .attr("height", CHART_ELEMENTS_MARGIN.top);
-	
-	grandparent.append("text")
-	    .attr("font-size", "26px")
-	    .attr("x", TEXT_MARGIN.left)
-	    .attr("y", TEXT_MARGIN.top - CHART_ELEMENTS_MARGIN.top)
-	    .attr("dy", ".90em");
-	
-	// D3 JSON reader, it returns an array of objects(root).
-	d3.json("util/sample.json", function(root) {		
-		/*
-		 * This is the formula to calculate the proper color of the chart node. 
-		 * It is calculated based on the color property that is stored in the
-		 * JSON file, divided into the maximum value of the visible nodes and
-		 * then multiplied by 8 that is the mayor number in the COLORBREWER.JS
-		 * You can check the COLORBREWER.CSS file in order to get it.
-		 */
-		var colorNumberGenerator = function(d) {
-	        return parseInt((d.color/getMaxShownValue()) * 8 , 10);
-	    };
+	var createGandparent = function(){		
+		// Remove the older grandparent and updates the new one
+		$(".grandparent").remove();
+			
+		// This is the field that will contain the hierarchy route
+		var grandparent = svg.append("g")
+		    .attr("class", "grandparent");
+				
+		grandparent.append("rect")
+		    .attr("y", -CHART_ELEMENTS_MARGIN.top)
+		    .attr("width", CHART_ANCHOR)
+		    .attr("height", CHART_ELEMENTS_MARGIN.top);
 		
-	    // Initial values for the chart
-		var initialize = function(root) {
-			root.x = root.y = 0;
-			root.dx = CHART_ANCHOR;
-			root.dy = CHART_HEIGHT;
-			root.depth = 0;
-		};
-	
-		/*
-		 * This computes the values of all the children and show it as
-		 * the "value" label in each node
-		 */ 
-		var accumulate = function(d) {
-			return d.children
-			? d.value = d.children.reduce(function(p, v) {
-				return p + accumulate(v); 
-			}, 0)
-			: d.value;
-		};
+		grandparent.append("text")
+		    .attr("font-size", "26px")
+		    .attr("x", TEXT_MARGIN.left)
+		    .attr("y", TEXT_MARGIN.top - CHART_ELEMENTS_MARGIN.top)
+		    .attr("dy", ".90em");
 		
-		/*
-		 * Compute the tree map layout recursively such that each group of 
-		 * siblings uses the same size rather than the dimensions of the 
-		 * parent cell.
-		 */ 
-		var layout = function(d) {
-			if (d.children) {
-				treemap.nodes({children: d.children});
-				d.children.forEach(function(c) {
-					c.x = d.x + c.x * d.dx;
-					c.y = d.y + c.y * d.dy;
-					c.dx *= d.dx;
-					c.dy *= d.dy;
-					c.parent = d;
-					layout(c);
-				});
-			}
+		this.getGrandParent = function(){
+			return grandparent;
 		};
+	};
 	
-		// Display the tree map
-		var display = function(d) {
-			var transition = function(d) {
-				if (transitioning || !d) return;
-			    	transitioning = true;
-			    	
-		    	var g2 = display(d),
-		        	t1 = g1.transition().duration(ZOOM_TRANSITION_DURATION),
-		        	t2 = g2.transition().duration(ZOOM_TRANSITION_DURATION);
-		    		
-			    // Update the domain only after entering new elements.
-		    	x.domain([d.x, d.x + d.dx]);
-			    y.domain([d.y, d.y + d.dy]);
-			
-			    // Enable anti-aliasing during the transition.
-			    svg.style("shape-rendering", null);
-			
-			    // Draw child nodes on top of parent nodes.
-			    svg.selectAll(".depth").sort(function(a, b) { return a.depth - b.depth; });
-			
-			    // Fade-in entering text.
-			    g2.selectAll("text").style("fill-opacity", 0);
-			
-			    // Transition to the new view.
-			    t1.selectAll("text").call(text).style("fill-opacity", 0);
-			    t2.selectAll("text").call(text).style("fill-opacity", 1);
-			    t1.selectAll("rect").call(rect);
-			    t2.selectAll("rect").call(rect);
-			
-			    // Remove the old node when the transition is finished.
-			    t1.remove().each("end", function() {
-			    	svg.style("shape-rendering", "crispEdges");
-			        transitioning = false;
-			    });
-			};
-			
-			grandparent.datum(d.parent)
-				.on("click", transition)
-			    .select("text")
-			    .text(name(d));
-			
-			// Append Grandparent
-		    var g1 = svg.insert("g", " .grandparent")
-		        .datum(d)
-		        .attr("class", "depth");
+	// Initial values for the chart
+	var initializeNode = function(root) {
+		root.x = root.y = 0;
+		root.dx = CHART_ANCHOR;
+		root.dy = CHART_HEIGHT;
+		root.depth = 0;
+	};
+	
+	/*
+	 * This computes the values of all the children and show it as
+	 * the "value" label in each node
+	 */ 
+	var accumulateNodeValue = function(node) {
+		return node.children
+		? node.value = node.children.reduce(function(parentValue, value) {
+			return parentValue + accumulateNodeValue(value); 
+		}, 0)
+		: node.value;
+	};
+	
+	/*
+	 * Compute the tree map layout recursively such that each group of 
+	 * siblings uses the same size rather than the dimensions of the 
+	 * parent cell.
+	 */ 
+	var calculateLayout = function(node) {
+		if (node.children) {
+			treemap.nodes({children: node.children});
+			node.children.forEach(function(child) {
+				child.x = node.x + child.x * node.dx;
+				child.y = node.y + child.y * node.dy;
+				child.dx *= node.dx;
+				child.dy *= node.dy;
+				child.parent = node;
+				calculateLayout(child);
+			});
+		}
+	};
 		
-		    // Append Children
-		    var g = g1.selectAll("g")
-		        .data(d.children)
+	// Display the tree map
+	var updateChart = function(node) {
+		
+		// Append Grandparent
+	    var g1 = svg.insert("g", " .grandparent")
+	        .datum(node)
+	        .attr("class", "depth");
+		
+		var createEachNode = function(node){
+	    	// Append Children
+		    var nodeChildren = g1.selectAll("g")
+		        .data(node.children)
 		        .enter().append("g")
 		        .attr("class", "shown");
 		   		    
 		    // Filter the displaying nodes just the node that has children
-		    g.filter(function(d) {
-		    	return d.children; 
+		    nodeChildren.filter(function(node) {
+		    	return node.children; 
 		    }).classed("children", true)
-		    .on("click", transition);
+		    .on("click", function(actualNode){
+		    	colorCalculationFlag = 0;
+				transition(actualNode);
+			});
 		
-		    g.selectAll(".child")
-		    	.data(function(d) {
-		        	return d.children || [d]; 
+		    nodeChildren.selectAll(".child")
+		    	.data(function(node) {
+		        	return node.children || [node]; 
 		        })
 		        .enter().append("rect")
-		        .attr("class", function(d){
+		        .attr("class", function(node){
 		        	return "child";
 		        })
 		        .call(rect);
 		    
-		    g.append("rect")
+		    nodeChildren.append("rect")
 		    	/*
 		    	 * The class that is given is to assign the proper color
 		    	 * depending on the color property of each node. 
 		    	 * Check the COLORBREWER.CSS file to check the values that
 		    	 * it can take
 		    	 */  
-		        .attr("class", function(d){
-		        	return "q" + colorNumberGenerator(d) + "-9 parent";
+		        .attr("class", function(node){
+		        	colorCalculationFlag ++;
+		        	return "q" + colorNumberGenerator(node) + "-9 parent";
 		        })
 		        .call(rect)
 		        .append("title")
-		        .text(function(d) {
-		        	return formatTooltipNumber(d.value);
+		        .text(function(node) {
+		        	return formatTooltipNumber(node.value);
 		        });
 		    
 		    /*
 	         *  Change the 'd y' attribute to change the position in Y axis
 	         *  of the text
 	         */ 
-		    g.append("text")
+		    nodeChildren.append("text")
 		    	.attr("class", "bigger")
 		        .attr("dy", ".75em")
-		        .text(function(d) {
-		        	return "Name: " + d.name; 
+		        .text(function(node) {
+		        	return "Name: " + node.name; 
 		        })
 		        .call(text);
 		
-	        g.append("text")
+	        nodeChildren.append("text")
 		        .attr("class", "normalSize")
 		        .attr("dy", "2.5em")
-		        .text(function(d) {
-		        	return "Value: "  + d.value + " Area (km2)"; 
+		        .text(function(node) {
+		        	return "Value: "  + node.value + " Area (km2)"; 
 		        }).call(text);
 		        
-	        g.append("text")
+	        nodeChildren.append("text")
 		        .attr("class", "normalSize")
 		        .attr("dy", "3.7em")
-		        .text(function(d) {
-		        	return "Color: " + d.color; 
+		        .text(function(node) {
+		        	return "Color: " + node.color; 
 		        }).call(text);
-		        
-		    return g;
+		    
+		    this.getChildNode = function(){
+		    	return nodeChildren;
+		    };
+		    
+	    };
+	    	    	    
+		var transition = function(node) {
+			if (transitioning || !node){
+				return;
+			}else{
+				transitioning = true;
+			}
+		    	
+	    	var chartUpdate = updateChart(node);
+	    	var grandpTransition = g1.transition().duration(ZOOM_TRANSITION_DURATION);
+	        var parentTransition = chartUpdate.transition().duration(ZOOM_TRANSITION_DURATION);
+	    		
+		    // Update the domain only after entering new elements.
+	    	x.domain([node.x, node.x + node.dx]);
+		    y.domain([node.y, node.y + node.dy]);
+		
+		    // Enable anti-aliasing during the transition.
+		    svg.style("shape-rendering", null);
+		
+		    // Draw child nodes on top of parent nodes.
+		    svg.selectAll(".depth").sort(function(a, b) { return a.depth - b.depth; });
+		
+		    // Fade-in entering text.
+		    chartUpdate.selectAll("text").style("fill-opacity", 0);
+		
+		    // Transition to the new view.
+		    grandpTransition.selectAll("text").call(text).style("fill-opacity", 0);
+		    parentTransition.selectAll("text").call(text).style("fill-opacity", 1);
+		    grandpTransition.selectAll("rect").call(rect);
+		    parentTransition.selectAll("rect").call(rect);
+		
+		    // Remove the old node when the transition is finished.
+		    grandpTransition.remove().each("end", function() {
+		    	svg.style("shape-rendering", "crispEdges");
+		        transitioning = false;
+		    });
 		};
-		initialize(root);
-		accumulate(root);
-		layout(root);
-		display(root);
+					
+		var grandparent = new createGandparent();			
+		grandparent.getGrandParent().datum(node.parent)
+			.on("click", function(actualNode){
+				colorCalculationFlag = 0;
+				transition(actualNode);
+			})
+		    .select("text")
+		    .text(name(node));
+				
+	    var g = new createEachNode(node);
+	    
+	    return g.getChildNode();
+		
+	};	
+	
+	/*
+	 *  D3 JSON reader. It is in charge of preprocessing the chart and then
+	 *  display it
+	 */ 
+	d3.json("util/sample.json", function(root) {
+		initializeNode(root);
+		accumulateNodeValue(root);
+		calculateLayout(root);
+		updateChart(root);
 	});
 })();
