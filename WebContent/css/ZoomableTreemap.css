@@ -1,20 +1,75 @@
 @CHARSET "ISO-8859-1";
 
 body {
-	font-family: "Open Sans";
-	margin: 1px auto 4px auto;
+	font-family: sans-serif;
+	margin: 0px auto;
 	position: relative;
-	width: 980px;
+	overflow: hidden;
 	text-align: center;
+	width: auto;
+	height: auto;
 }
 
 #chart {
-	font-family: 'Patua One';
+	font-family: sans-serif;
 	color: #FFF;
+	/*border: solid 1px red;*/
+	margin: 0px auto;
+	overflow: hidden;
+	position: relative;
+	height: auto;
+	width: auto;
 }
+
+
+/*@media screen and (max-width: 2000px){
+	#chart{
+		width: 80%;
+	}
+	
+	.shown .parent{
+		font-size: 1em;
+	}
+	
+	.grandparent text {
+		font-size: 1.2em;
+	}
+}
+
+@media screen and (max-width: 980px){
+	#chart{
+		width: 80%;
+	}
+	
+	.shown .parent{
+		font-size: 0.8em;
+	}
+	
+	.grandparent text {
+		font-size: 1m;
+	}
+}
+
+@media screen and (max-width: 624px){
+	#chart{
+		width: 80%;
+	}
+	
+	.shown .parent{
+		font-size: 0.6em;
+		font-weight: bold;
+	}
+	
+	.grandparent text {
+		font-size: 0.8em;
+	}
+}*/
 
 rect {
 	stroke: #fff;
+	position: relative;
+	overflow: hidden;
+	margin-bottom: 10px;
 }
 
 rect.parent,.grandparent rect {
@@ -23,6 +78,11 @@ rect.parent,.grandparent rect {
 
 .grandparent rect {
 	fill: #5f5f5f;
+	width: 100%;
+}
+
+.grandparent text {
+	font-weight: bold;
 }
 
 .grandparent:HOVER{
@@ -32,6 +92,7 @@ rect.parent,.grandparent rect {
 text {
 	pointer-events: none;
 	fill: #fff;
+	border: solid 1px white;
 }
 
 .grandparent text {
@@ -39,17 +100,12 @@ text {
 	border-width: 1px;
 }
 
-text.bigger{
-	font-size: 22px;
-}
-
-text.normalSize{
-	font-size: 14px;
-	font-family: "Open Sans";
-}
-
 .children:HOVER {
 	cursor: pointer;
 	pointer-events: all;
+}
+
+.txtName {
+	font-weight: bold;
 }
 

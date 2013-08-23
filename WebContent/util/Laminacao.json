@@ -1,0 +1,227 @@
+{
+ "name": "Vallourec Brasil",
+ "children": [
+  {
+   "name": "Siderurgia",
+   "color" : 1900,
+   "children": [
+    {
+        "name": "Redu\u00E7\u00E3o",
+        "value": 160000,
+        "color" : 2000,
+        "children":[
+            {
+                "name": "Altoforno1",
+                "value" : 52000,
+                "color" : 1500
+            },
+            {
+                "name": "Altoforno2",
+                "value" : 42000,
+                "color" : 900
+            },
+            {
+                "name": "Lingotamento Gusa",
+                "value" : 80000,
+                "color" : 1200
+            }
+        ]
+    },
+    {
+        "name": "Aciaria", 
+        "value": 400000,
+        "color" : 1900,
+        "children": [
+            {
+                "name" : "Refino Prim\u00E1rio",
+                "value": 25000,
+                "color": 3200,
+                "children": [
+                    {
+                        "name": "Convertedor LD",
+                        "value" : 40000,
+                        "color" : 482
+                    }    
+                ]
+            },
+            {
+                "name" : "Refino Secund\u00E1rio",
+                "value": 15000,
+                "color": 1569,
+                "children": [
+                    {
+                        "name": "Forno panela (FP)",
+                        "value" : 32000,
+                        "color" : 1000
+                    },
+                    {
+                        "name": "Esta\u00E7\u00E3o de v\u00E1culo (VD)",
+                        "value" : 15000,
+                        "color" : 800
+                    },
+                    {
+                        "name": "Rinsagem (RS)",
+                        "value" : 8000,
+                        "color" : 600
+                    },
+                    {
+                        "name": "Lingotamento Cont\u00EDnuo",
+                        "value" : 39000,
+                        "color" : 200
+                    }
+                ]
+            }
+        ]
+    }
+   ]
+  },
+  {
+   "name": "Lamina\u00E7\u00E3o",
+   "color" : 3000,
+   "children": [
+    {
+        "name": "Lamina\u00E7\u00E3o Autom\u00E1tica", 
+        "value": 5000,
+        "color" : 1500,
+        "children": [
+            {
+                "name": "Lamina\u00E7\u00E3o",
+                "value" : 2500,
+                "color" : 8900,
+                "children":[
+                    {
+                        "name" : "Forno de Aquencimiento dos Blocos (Italimplanti)",
+                        "value" : 15864,
+                        "color": 1515
+                    },
+                    {
+                        "name" : "Laminador Obl\u00EDquo (SWW)",
+                        "value" : 15864,
+                        "color": 1515
+                    },
+                    {
+                        "name" : "Laminador com Mandris (Laminador III)",
+                        "value" : 15864,
+                        "color": 1515
+                    },
+                    {
+                        "name" : "Reeler I",
+                        "value" : 15864,
+                        "color": 1515
+                    },
+                    {
+                        "name" : "Reeler II",
+                        "value" : 15864,
+                        "color": 1515
+                    },
+                    {
+                        "name" : "Forno de Reaquecimento (Nassheuer)",
+                        "value" : 15864,
+                        "color": 1515
+                    },
+                    {
+                        "name" : "Descarepador",
+                        "value" : 15864,
+                        "color": 1515
+                    },
+                    {
+                        "name" : "Laminador Calibrador (Redutor)",
+                        "value" : 15864,
+                        "color": 1515
+                    },
+                    {
+                        "name" : "Desempenadeira",
+                        "value" : 15864,
+                        "color": 1515
+                    },
+                    {
+                        "name" : "M\u00E1quinas de Serra",
+                        "value" : 15864,
+                        "color": 1515
+                    }
+                ]
+            },{
+                "name" : "Ajustagem",
+                "value" : 15686,
+                "color" : 15168, 
+                "children" : [
+                    {
+                        "name" : "Calibra\u00E7\u00E3o",
+                        "value": 55648,
+                        "color": 4526
+                    },
+                    {
+                        "name" : "Chanfragem",
+                        "value": 55648,
+                        "color": 4526
+                    },
+                    {
+                        "name" : "Teste Hidrost\u00E1tico",
+                        "value": 55648,
+                        "color": 4526
+                    },
+                    {
+                        "name" : "Prepara\u00E7\u00E3o",
+                        "value": 55648,
+                        "color": 4526
+                    },
+                    {
+                        "name" : "END",
+                        "value": 55648,
+                        "color": 4526
+                    }
+                ]
+            },
+            {
+                "name" : "T\u00EAmperatura e Revenimiento",
+                "value" : 15686,
+                "color" : 15168, 
+                "children" : [
+                    {
+                        "name" : "Austenitiza\u00E7\u00E3o",
+                        "value": 55648,
+                        "color": 4526
+                    },
+                    {
+                        "name" : "T\u00EAmpera",
+                        "value": 55648,
+                        "color": 4526
+                    },
+                    {
+                        "name" : "Revenimiento",
+                        "value": 55648,
+                        "color": 4526
+                    },
+                    {
+                        "name" : "Desempeno",
+                        "value": 55648,
+                        "color": 4526
+                    },
+                    {
+                        "name" : "Resfriamento",
+                        "value": 55648,
+                        "color": 4526
+                    },
+                    {
+                        "name" : "Marca\u00E7\u00E3o",
+                        "value": 55648,
+                        "color": 4526
+                    },
+                    {
+                        "name" : "Amostragem",
+                        "value": 55648,
+                        "color": 4526
+                    },
+                    {
+                        "name" : "END",
+                        "value": 55648,
+                        "color": 4526
+                    }
+                ]
+            }
+        ]
+    }
+   ]
+  }
+ ]
+}

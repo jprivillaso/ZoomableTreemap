@@ -3,7 +3,6 @@
 	// CONSTANTS
 	var TOOLTIP_NUMBER_FORMAT = ",d";	
 	var CHART_ELEMENTS_MARGIN = {
-<<<<<<< HEAD
 		top: 45,
 		right: 0,
 		bottom: 0,
@@ -13,68 +12,46 @@
 	 * You can change any time to reorder as you want the position of the text
 	 * in each node
 	 */
-=======
-	top: 45,
-	right: 0,
-	bottom: 0,
-	left: 0
-	};	
->>>>>>> 4f55186cef4c464ecefb81a9a70603b901dd5c76
 	var TEXT_MARGIN = {
-	top: 10,
-	right: 0,
-	bottom: 0,
-	left : 6
+		top: 10,
+		right: 0,
+		bottom: 0,
+		left : 6
 	};	
-<<<<<<< HEAD
-    var CHART_ANCHOR = 980;
-    var CHART_HEIGHT = 500 - CHART_ELEMENTS_MARGIN.top;
+	
+    /*var CHART_ANCHOR = $("#chart")[0].offsetWidth;
+    var CHART_HEIGHT = $("#chart")[0].offsetHeight - CHART_ELEMENTS_MARGIN.top;*/
+	
+	var CHART_ANCHOR = 600;
+	var CHART_HEIGHT = 400;
     var ZOOM_TRANSITION_DURATION = 350;
     
     // VARIABLES    
     var maxShownValue = 0;
+    var minShownValue = 0;
     var colorCalculationFlag = 0;
     var formatTooltipNumber = d3.format(TOOLTIP_NUMBER_FORMAT);
     var transitioning = false;
-	
-=======
-	var CHART_ANCHOR = 700;
-	var CHART_HEIGHT = 500 - CHART_ELEMENTS_MARGIN.top;
-	var ZOOM_TRANSITION_DURATION = 400;
-	
-	// VARIABLES
-	
-	var formatTooltipNumber = d3.format(TOOLTIP_NUMBER_FORMAT);
-	var transitioning = false;
-	
-	/**
-	* Return the max value of an array
-        */
-    	var getArrayMaxValue = function(array){
-		var position = array.length-1;
-		
-		for (var i=array.length-1; i--;) {
-		   if (array[i] > array[position]) {
-			   position = i;
-		   }
-		}
-		return array[position];
-	};
-	
->>>>>>> 4f55186cef4c464ecefb81a9a70603b901dd5c76
+    
 	/*
 	 * Return the maximum value of the nodes that are displayed at the moment
 	 * in the chart
 	 */
 	var getMaxShownValue = function(){
-		var array = [];
+		var colorArray = [];
+		var valueArray = [];
 		var elements = $(".depth:last .shown");
 		
 		for (var i = 0; i < elements.length; i++){
-			array.push(elements[i].__data__.color);
+			colorArray.push(elements[i].__data__.color);
+			valueArray.push(elements[i].__data__.value);
 		}		
-	    maxShownValue = _.max(array);
-		return _.max(array);
+	    maxShownValue = _.max(colorArray);
+	    minShownValue = _.min(valueArray);
+		return {
+			max: _.max(colorArray),
+			min: _.min(valueArray)
+		};
 	};	
 	
 	/*
@@ -89,7 +66,7 @@
 		if (colorCalculationFlag > 1) {
 			return parseInt((node.color/maxShownValue) * 8 , 10);
     	}else{
-    		return parseInt((node.color/getMaxShownValue()) * 8 , 10);
+    		return parseInt((node.color/getMaxShownValue().max) * 8 , 10);
     	}
     };
 	
@@ -108,7 +85,7 @@
 	// This method sets the properties of each rectangle(node) element
 	var rect = function(rect) {
 		rect.attr("x", function(node) {
-			return x(node.x); 
+			return x(node.x);
 		}).attr("y", function(node) {
 			return y(node.y); 
 		}).attr("width", function(node) {
@@ -141,7 +118,7 @@
 	 * and then check what color do you want in the COLORBREWER.CSS file
 	 */ 
 	var svg = d3.select("#chart").append("svg")
-		.attr("class", "Blues")
+		.attr("class", "YlOrRd")
 		.attr("width", CHART_ANCHOR + "px")
 		.attr("height", CHART_HEIGHT + CHART_ELEMENTS_MARGIN.top + "px")
 	    .style("margin-left", -CHART_ELEMENTS_MARGIN.left + "px")
@@ -164,7 +141,6 @@
 		    .attr("height", CHART_ELEMENTS_MARGIN.top);
 		
 		grandparent.append("text")
-		    .attr("font-size", "26px")
 		    .attr("x", TEXT_MARGIN.left)
 		    .attr("y", TEXT_MARGIN.top - CHART_ELEMENTS_MARGIN.top)
 		    .attr("dy", ".90em");
@@ -220,7 +196,8 @@
 	    var g1 = svg.insert("g", " .grandparent")
 	        .datum(node)
 	        .attr("class", "depth");
-		
+			   
+	    
 		var createEachNode = function(node){
 	    	// Append Children
 		    var nodeChildren = g1.selectAll("g")
@@ -237,16 +214,6 @@
 				transition(actualNode);
 			});
 		
-		    nodeChildren.selectAll(".child")
-		    	.data(function(node) {
-		        	return node.children || [node]; 
-		        })
-		        .enter().append("rect")
-		        .attr("class", function(node){
-		        	return "child";
-		        })
-		        .call(rect);
-		    
 		    nodeChildren.append("rect")
 		    	/*
 		    	 * The class that is given is to assign the proper color
@@ -258,6 +225,9 @@
 		        	colorCalculationFlag ++;
 		        	return "q" + colorNumberGenerator(node) + "-9 parent";
 		        })
+		        .attr("name", function(node){
+		    		return node.name;
+		    	})
 		        .call(rect)
 		        .append("title")
 		        .text(function(node) {
@@ -269,33 +239,40 @@
 	         *  of the text
 	         */ 
 		    nodeChildren.append("text")
-		    	.attr("class", "bigger")
+		    	.attr("class", "txtName")
+		    	.attr("value", function(node){
+		    		return node.value;
+		    	})
 		        .attr("dy", ".75em")
 		        .text(function(node) {
-		        	return "Name: " + node.name; 
-		        })
-		        .call(text);
-		
-	        nodeChildren.append("text")
-		        .attr("class", "normalSize")
-		        .attr("dy", "2.5em")
+		        	return node.name; 
+		        }).call(text);
+		    		    
+		    nodeChildren.append("text")
+	        	.attr("class", "txtValue")
+		        .attr("dy", "2.3em")
 		        .text(function(node) {
 		        	return "Value: "  + node.value + " Area (km2)"; 
 		        }).call(text);
-		        
+		       
 	        nodeChildren.append("text")
-		        .attr("class", "normalSize")
-		        .attr("dy", "3.7em")
+		        .attr("class", "txtColor")
+		        .attr("dy", "3.5em")
 		        .text(function(node) {
 		        	return "Color: " + node.color; 
 		        }).call(text);
-		    
+	        
+	        d3.selectAll(".shown")
+	        	.attr("font-size", function(node){
+	        		var size = (minShownValue.toString().length / $(".depth:last .shown").length);
+	        		return size >= 1.5 ? "1em" : size.toFixed(1) + "em" ;
+	        	});
+	        
 		    this.getChildNode = function(){
 		    	return nodeChildren;
 		    };
-		    
 	    };
-	    	    	    
+	    	    
 		var transition = function(node) {
 			if (transitioning || !node){
 				return;
@@ -343,19 +320,19 @@
 		    .text(name(node));
 				
 	    var g = new createEachNode(node);
-	    
 	    return g.getChildNode();
-		
 	};	
+		
 	
 	/*
-	 *  D3 JSON reader. It is in charge of preprocessing the chart and then
+	 *  D3 JSON reader. It is in charge of processing the chart and then
 	 *  display it
 	 */ 
-	d3.json("util/sample.json", function(root) {
+	d3.json("util/laminacao.json", function(root) {
 		initializeNode(root);
 		accumulateNodeValue(root);
 		calculateLayout(root);
 		updateChart(root);
 	});
+	
 })();
