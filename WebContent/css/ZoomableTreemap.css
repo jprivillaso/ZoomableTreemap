@@ -21,50 +21,6 @@ body {
 	width: auto;
 }
 
-
-/*@media screen and (max-width: 2000px){
-	#chart{
-		width: 80%;
-	}
-	
-	.shown .parent{
-		font-size: 1em;
-	}
-	
-	.grandparent text {
-		font-size: 1.2em;
-	}
-}
-
-@media screen and (max-width: 980px){
-	#chart{
-		width: 80%;
-	}
-	
-	.shown .parent{
-		font-size: 0.8em;
-	}
-	
-	.grandparent text {
-		font-size: 1m;
-	}
-}
-
-@media screen and (max-width: 624px){
-	#chart{
-		width: 80%;
-	}
-	
-	.shown .parent{
-		font-size: 0.6em;
-		font-weight: bold;
-	}
-	
-	.grandparent text {
-		font-size: 0.8em;
-	}
-}*/
-
 rect {
 	stroke: #fff;
 	position: relative;
@@ -109,3 +65,8 @@ text {
 	font-weight: bold;
 }
 
+
+title{
+	border: solid 1px red;
+	background-color: blue;
+}
